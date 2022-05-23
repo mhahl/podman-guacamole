@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  name: guacamole
+spec:
+  containers:
+  - name: mysql
+    image: mysql
+    restartPolicy: Always
+    securityContext:
+      seLinuxOptions:
+        type: spc_t
+    env:
+    - name: MYSQL_USER
+      value: guacamole
+    - name: MYSQL_DATABASE
+      value: guacamole
+    - name: MYSQL_PASSWORD
+      value: guacamole
+    volumeMounts:
+    - mountPath: /var/lib/mysql
+      name: mysql-data
+
+  - name: guacamole
+    image: guacamole/guacamole
+    restartPolicy: Always
+    securityContext:
+      seLinuxOptions:
+        type: spc_t
+    env:
+    - name: GUACAMOLE_HOME
+      value: /etc/guacamole
+    - name: GUACD_HOSTNAME
+      value: syd-guacd-01.vdi.hahl.au
+    ports:
+    - containerPort: 8080
+      hostPort: 8080
+      protocol: tcp
+      name: http
+    volumeMounts:
+    - mountPath: /etc/guacamole
+      name: guacamole-config
+  volumes:
+  - name: mysql-data
+    hostPath:
+      path: /opt/mysql
+      type: Directory
+  - name: guacamole-config
+    hostPath:
+      path: /opt/guacamole
+      type: Directory
+
