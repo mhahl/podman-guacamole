@@ -5,12 +5,21 @@ metadata:
   name: guacamole-environment
 data:
   MYSQL_HOSTNAME: 127.0.0.1
-  MYSQL_ROOT_PASSWORD: xxxxx
+  MYSQL_ROOT_PASSWORD: 
   MYSQL_USER: guacamole_user
   MYSQL_DATABASE: guacamole_db
-  MYSQL_PASSWORD: xxxx
+  MYSQL_PASSWORD: 
   GUACAMOLE_HOME: /etc/guacamole
-  GUACD_HOSTNAME: xxxx
+  GUACD_HOSTNAME: syd-guac-01.vdi.hahl.au
+  LDAP_HOSTNAME: ipa-ca.auth.hahl.au
+  LDAP_PORT: 389
+  LDAP_ENCRYPTION_METHOD: none
+  LDAP_USER_BASE_DN: cn=users,cn=accounts,dc=auth,dc=hahl,dc=au
+  LDAP_USERNAME_ATTRIBUTE: uid
+  LDAP_SEARCH_BIND_DN: uid=svc-hahl-guac_bind,cn=users,cn=accounts,dc=auth,dc=hahl,dc=au
+  LDAP_SEARCH_BIND_PASSWORD: 
+  LDAP_GROUP_SEARCH_FILTER: (memberOf=cn=grp-hahl-users,cn=groups,cn=accounts,dc=auth,dc=hahl,dc=au)
+
 ---
 apiVersion: apps/v1
 kind: Pod
